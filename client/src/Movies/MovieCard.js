@@ -1,12 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const MovieCard = props => {
-  const deleteMovie = (id) => {
-    axios.delete(`http://localhost:5000/api/movies/${id}`)
+  const handleUpdate = event => {
+    event.preventDefault();
+    props.history.push(`/update-movie/${props.movie.id}`);
+  };
+
+  const deleteMovie = event => {
+    event.preventDefault();
+    axios.delete(`http://localhost:5000/api/movies/${props.movie.id}`)
       .then(res => {
         console.log(res);
+        // props.setMovieList(res.data);
         props.history.push('/');
         window.location.reload();
       })
@@ -33,13 +39,11 @@ const MovieCard = props => {
         </div>
       ))}
 
-      <div className='edit-button' onClick={() => props.movieToEdit(props.movie)}>
-        <Link key={id} to={`/update-movie/${id}`}>
-          Edit
-        </Link>
+      <div key = {id} className='edit-button' onClick={handleUpdate}>
+        Edit
       </div>
 
-      <div className='delete-button' onClick={() => deleteMovie(props.movie.id)}>
+      <div key={id} className='delete-button' onClick={deleteMovie}>
         Delete
       </div>
     </div>

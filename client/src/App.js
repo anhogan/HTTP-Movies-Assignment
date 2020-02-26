@@ -9,36 +9,17 @@ import axios from 'axios';
 const App = () => {
   const [savedList, setSavedList] = useState([]);
   const [movieList, setMovieList] = useState([]);
-  const [editMovie, setEditMovie] = useState({
-    id: '',
-    title: '',
-    director: '',
-    metascore: '',
-    stars: []
-  });
 
   const getMovieList = () => {
     axios
       .get("http://localhost:5000/api/movies")
-      .then(res => setMovieList(res.data))
+      .then(res => {console.log(res); setMovieList(res.data)})
       .catch(err => console.log(err.response));
   };
 
   const addToSavedList = movie => {
     setSavedList([...savedList, movie]);
   };
-
-  const movieToEdit = (movie) => {
-    const edit = {
-      id: movie.id,
-      title: movie.title,
-      director: movie.director,
-      metascore: movie.metascore,
-      stars: movie.stars
-    };
-
-    setEditMovie(edit);
-  }
 
   useEffect(() => {
     getMovieList();
@@ -49,15 +30,15 @@ const App = () => {
       <SavedList list={savedList} />
 
       <Route exact path="/" render={(props) => (
-        <MovieList {...props} movies={movieList} movieToEdit={movieToEdit} />
+        <MovieList {...props} movies={movieList} setMovieList={setMovieList} />
       )} />
 
       <Route path="/movies/:id" render={(props) => (
-        <Movie {...props} addToSavedList={addToSavedList} movieToEdit={movieToEdit} />
+        <Movie {...props} addToSavedList={addToSavedList} setMovieList={setMovieList} />
       )} />
 
       <Route path="/update-movie/:id" render={(props) => (
-        <UpdateMovieForm {...props} editMovie={editMovie} />
+        <UpdateMovieForm {...props} movieList={movieList} setMovieList={setMovieList} />
       )} />
     </>
   );

@@ -1,40 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-// If / Else for star updating (if no changes made it throws an error)
+const initialMovieState = {
+  id: '',
+  title: '',
+  director: '',
+  metascore: '',
+  stars: []
+}
 
 const UpdateMovieForm = (props) => {
-  const [movie, setMovie] = useState({
-    id: '',
-    title: '',
-    director: '',
-    metascore: '',
-    stars: []
-  });
+  const [movie, setMovie] = useState(initialMovieState);
+  const { id } = useParams();
+  console.log(props.movieList);
+
+  useEffect(() => {
+    const movieToEdit = props.movieList.find(movie => `${movie.id}` === id);
+
+    if(movieToEdit) {
+      setMovie(movieToEdit);
+    };
+  }, [id]);
 
   const handleChange = event => {
+    let value = event.target.value;
+    if (event.target.name === "metascore") {
+      value = parseInt(value, 10);
+    } else if (event.target.name === "stars") {
+      value = value.split(',');
+    };
+
     setMovie({
       ...movie,
-      [event.target.name]: event.target.value
+      [event.target.name]: value
     });
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    updateMovie(movie, movie.id);
-  };
-
-  const updateMovie = ({ id: id, title: title, director: director, metascore: metascore, stars: stars }) => {
-    const parsedScore = parseInt(metascore);
-    const starArr = stars.split(',');
-
-    axios.put(`http://localhost:5000/api/movies/${id}`, {
-      id: movie.id,
-      title: title,
-      director: director,
-      metascore: parsedScore,
-      stars: starArr
-    })
+    axios.put(`http://localhost:5000/api/movies/${id}`, movie)
       .then(res => {
         console.log(res);
         props.history.push('/');
@@ -44,16 +49,6 @@ const UpdateMovieForm = (props) => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    setMovie({
-      id: props.editMovie.id,
-      title: props.editMovie.title,
-      director: props.editMovie.director,
-      metascore: props.editMovie.metascore,
-      stars: props.editMovie.stars
-    });
-  }, [props.editMovie]);
 
   return (
     <div>
