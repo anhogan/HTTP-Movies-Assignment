@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+// RETURN AN ARRAY FROM STARS WHEN EDITING
+// HOW TO EDIT METASCORE
+
 const UpdateMovieForm = (props) => {
   const [movie, setMovie] = useState({
     id: '',
@@ -20,10 +23,18 @@ const UpdateMovieForm = (props) => {
   const handleSubmit = event => {
     event.preventDefault();
     updateMovie(movie, movie.id);
-  }
+  };
 
-  const updateMovie = (updatedInfo, id) => {
-    axios.put(`http://localhost:5000/api/movies/${id}`, updatedInfo)
+  const updateMovie = ({ id: id, title: title, director: director, metascore: metascore, stars: stars }) => {
+    const parsedScore = parseInt(metascore);
+
+    axios.put(`http://localhost:5000/api/movies/${id}`, {
+      id: movie.id,
+      title: title,
+      director: director,
+      metascore: parsedScore,
+      stars: stars
+    })
       .then(res => {
         console.log(res);
         props.history.push('/');
@@ -67,9 +78,9 @@ const UpdateMovieForm = (props) => {
         <div>
           <label htmlFor="meta">Metascore</label>
           <input
-            id="meta"
-            name="meta"
-            type="text"
+            id="metascore"
+            name="metascore"
+            type="number"
             value={movie.metascore}
             onChange={handleChange} />
         </div>
