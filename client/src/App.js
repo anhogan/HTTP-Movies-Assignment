@@ -6,10 +6,11 @@ import Movie from "./Movies/Movie";
 import UpdateMovieForm from './Movies/UpdateMovieForm';
 import axios from 'axios';
 
-const App = () => {
+const App = (props) => {
   const [savedList, setSavedList] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [editMovie, setEditMovie] = useState({
+    id: '',
     title: '',
     director: '',
     metascore: '',
@@ -29,6 +30,7 @@ const App = () => {
 
   const movieToEdit = (movie) => {
     const edit = {
+      id: movie.id,
       title: movie.title,
       director: movie.director,
       metascore: movie.metascore,
@@ -54,9 +56,9 @@ const App = () => {
         <Movie addToSavedList={addToSavedList} movieToEdit={movieToEdit} />
       </Route>
 
-      <Route path="/update-movie/:id">
-        <UpdateMovieForm editMovie={editMovie} />
-      </Route>
+      <Route path="/update-movie/:id" render={(props) => (
+        <UpdateMovieForm {...props} editMovie={editMovie} />
+      )} />
     </>
   );
 };

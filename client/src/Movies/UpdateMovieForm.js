@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const UpdateMovieForm = (props) => {
   const [movie, setMovie] = useState({
+    id: '',
     title: '',
     director: '',
     metascore: '',
@@ -15,8 +17,25 @@ const UpdateMovieForm = (props) => {
     });
   };
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    updateMovie(movie, movie.id);
+  }
+
+  const updateMovie = (updatedInfo, id) => {
+    axios.put(`http://localhost:5000/api/movies/${id}`, updatedInfo)
+      .then(res => {
+        console.log(res);
+        props.history.push('/');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     setMovie({
+      id: props.editMovie.id,
       title: props.editMovie.title,
       director: props.editMovie.director,
       metascore: props.editMovie.metascore,
@@ -26,7 +45,7 @@ const UpdateMovieForm = (props) => {
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title">Title</label>
           <input
