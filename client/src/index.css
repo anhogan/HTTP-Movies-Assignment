@@ -74,6 +74,17 @@ body {
 .home-button {
   padding: 5px 10px;
   background-color: lightskyblue;
+  width: 15%;
+}
+
+.home-button a {
+  margin-left: 10%;
+  text-decoration: none;
+}
+
+.home-button a:hover {
+  cursor: pointer;
+  color: white;
 }
 
 .movie-warning {
