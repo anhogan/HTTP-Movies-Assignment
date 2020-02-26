@@ -12,9 +12,15 @@ const MovieCard = props => {
     axios.delete(`http://localhost:5000/api/movies/${props.movie.id}`)
       .then(res => {
         console.log(res);
-        // props.setMovieList(res.data);
+        axios.get('http://localhost:5000/api/movies')
+          .then(res => {
+            console.log(res);
+            props.setMovieList(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
         props.history.push('/');
-        window.location.reload();
       })
       .catch(err => {
         console.log(err);
@@ -39,11 +45,11 @@ const MovieCard = props => {
         </div>
       ))}
 
-      <div key = {id} className='edit-button' onClick={handleUpdate}>
+      <div className='edit-button' onClick={handleUpdate}>
         Edit
       </div>
 
-      <div key={id} className='delete-button' onClick={deleteMovie}>
+      <div className='delete-button' onClick={deleteMovie}>
         Delete
       </div>
     </div>

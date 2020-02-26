@@ -21,7 +21,7 @@ const UpdateMovieForm = (props) => {
     if(movieToEdit) {
       setMovie(movieToEdit);
     };
-  }, [id]);
+  }, [props.movieList, id]);
 
   const handleChange = event => {
     let value = event.target.value;
@@ -42,8 +42,15 @@ const UpdateMovieForm = (props) => {
     axios.put(`http://localhost:5000/api/movies/${id}`, movie)
       .then(res => {
         console.log(res);
+        axios.get('http://localhost:5000/api/movies')
+          .then(res => {
+            console.log(res);
+            props.setMovieList(res.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
         props.history.push('/');
-        window.location.reload();
       })
       .catch(err => {
         console.log(err);
