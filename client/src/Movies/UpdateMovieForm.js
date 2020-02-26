@@ -75,12 +75,14 @@ const UpdateMovieForm = (props) => {
         </div>
         <div>
           <label htmlFor="stars">Stars</label>
-          <input
-            id="stars"
-            name="stars"
-            type="text"
-            value={movie.stars}
-            onChange={handleChange} />
+          {movie.stars.map((star) => (
+            <input
+              id="stars"
+              name="stars"
+              type="text"
+              value={star}
+              onChange={handleChange} />
+          ))}
         </div>
         <button>Update Movie</button>
       </form>
