@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 
 const initialMovieState = {
   id: '',
@@ -10,18 +9,8 @@ const initialMovieState = {
   stars: []
 };
 
-const UpdateMovieForm = (props) => {
+const AddMovieForm = (props) => {
   const [movie, setMovie] = useState(initialMovieState);
-  const { id } = useParams();
-  console.log(props.movieList);
-
-  useEffect(() => {
-    const movieToEdit = props.movieList.find(movie => `${movie.id}` === id);
-
-    if(movieToEdit) {
-      setMovie(movieToEdit);
-    };
-  }, [props.movieList, id]);
 
   const handleChange = event => {
     let value = event.target.value;
@@ -39,17 +28,10 @@ const UpdateMovieForm = (props) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    axios.put(`http://localhost:5000/api/movies/${id}`, movie)
+    axios.post(`http://localhost:5000/api/movies`, movie)
       .then(res => {
         console.log(res);
-        axios.get('http://localhost:5000/api/movies')
-          .then(res => {
-            console.log(res);
-            props.setMovieList(res.data);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        props.setMovieList(res.data);
         props.history.push('/');
       })
       .catch(err => {
@@ -66,7 +48,6 @@ const UpdateMovieForm = (props) => {
             id="title"
             name="title"
             type="text"
-            value={movie.title}
             onChange={handleChange} />
         </div>
         <div>
@@ -75,7 +56,6 @@ const UpdateMovieForm = (props) => {
             id="director"
             name="director"
             type="text"
-            value={movie.director}
             onChange={handleChange} />
         </div>
         <div>
@@ -84,7 +64,6 @@ const UpdateMovieForm = (props) => {
             id="metascore"
             name="metascore"
             type="number"
-            value={movie.metascore}
             onChange={handleChange} />
         </div>
         <div>
@@ -93,21 +72,12 @@ const UpdateMovieForm = (props) => {
               id="stars"
               name="stars"
               type="text"
-              value={movie.stars}
               onChange={handleChange} />
-          {/* {movie.stars.map((star) => (
-            <input
-              id="stars"
-              name="stars"
-              type="text"
-              value={star}
-              onChange={handleChange} />
-          ))} */}
         </div>
-        <button>Update Movie</button>
+        <button>Add Movie</button>
       </form>
     </div>
   );
 };
 
-export default UpdateMovieForm;
+export default AddMovieForm;
