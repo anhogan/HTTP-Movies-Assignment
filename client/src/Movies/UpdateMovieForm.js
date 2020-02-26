@@ -27,13 +27,14 @@ const UpdateMovieForm = (props) => {
 
   const updateMovie = ({ id: id, title: title, director: director, metascore: metascore, stars: stars }) => {
     const parsedScore = parseInt(metascore);
+    const starArr = stars.split(',');
 
     axios.put(`http://localhost:5000/api/movies/${id}`, {
       id: movie.id,
       title: title,
       director: director,
       metascore: parsedScore,
-      stars: stars
+      stars: starArr
     })
       .then(res => {
         console.log(res);
@@ -86,14 +87,20 @@ const UpdateMovieForm = (props) => {
         </div>
         <div>
           <label htmlFor="stars">Stars</label>
-          {movie.stars.map((star) => (
+          <input
+              id="stars"
+              name="stars"
+              type="text"
+              value={movie.stars}
+              onChange={handleChange} />
+          {/* {movie.stars.map((star) => (
             <input
               id="stars"
               name="stars"
               type="text"
               value={star}
               onChange={handleChange} />
-          ))}
+          ))} */}
         </div>
         <button>Update Movie</button>
       </form>
