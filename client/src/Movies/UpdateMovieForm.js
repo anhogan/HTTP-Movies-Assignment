@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-// RETURN AN ARRAY FROM STARS WHEN EDITING
-// HOW TO EDIT METASCORE
+// If / Else for star updating
 
 const UpdateMovieForm = (props) => {
   const [movie, setMovie] = useState({

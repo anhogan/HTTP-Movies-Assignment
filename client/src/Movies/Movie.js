@@ -28,7 +28,7 @@ function Movie(props) {
 
   return (
     <div className='save-wrapper'>
-      <MovieCard movie={movie} movieToEdit={props.movieToEdit} />
+      <MovieCard movie={movie} movieToEdit={props.movieToEdit} history={props.history} />
 
       <div className='save-button' onClick={saveMovie}>
         Save

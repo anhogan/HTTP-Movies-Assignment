@@ -43,27 +43,32 @@ body {
 .saved-movie {
   margin: 0 10px;
 }
+
 .saved-active {
   color: blue;
   border: 1px solid grey;
   padding: 5px;
 }
+
 .save-wrapper {
   position: relative;
   width: 75%;
   margin: 1rem auto;
 }
+
 .save-button {
   position: absolute;
   top: 25px;
-  right: 25px;
+  right: 100px;
   border: 1px solid grey;
   padding: 5px 10px;
   background-color: lightseagreen;
 }
+
 .save-button:hover {
   background-color: green;
   color: white;
+  cursor: pointer;
 }
 
 .home-button {
@@ -74,4 +79,40 @@ body {
 .movie-warning {
   color: red;
   text-align: center;
+}
+
+.edit-button {
+  position: absolute;
+  top: 25px;
+  right: 165px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: lightseagreen;
+}
+
+.edit-button:hover {
+  background-color: blue;
+}
+
+.edit-button a {
+  color: black;
+  text-decoration: none;
+}
+
+.edit-button a:hover {
+  color: white;
+}
+
+.delete-button {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  border: 1px solid grey;
+  padding: 5px 10px;
+  background-color: lightseagreen;
+}
+
+.delete-button:hover {
+  background-color: red;
+  color: white;
 }
