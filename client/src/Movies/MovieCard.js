@@ -19,9 +19,9 @@ const MovieCard = props => {
           {star}
         </div>
       ))}
-      
+
       <Link key={id} to={`/update-movie/${id}`}>
-        <button>Edit Movie</button>
+        <button onClick={() => props.movieToEdit(props.movie)}>Edit Movie</button>
       </Link>
     </div>
   );
