@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-// If / Else for star updating
+// If / Else for star updating (if no changes made it throws an error)
 
 const UpdateMovieForm = (props) => {
   const [movie, setMovie] = useState({
@@ -38,6 +38,7 @@ const UpdateMovieForm = (props) => {
       .then(res => {
         console.log(res);
         props.history.push('/');
+        window.location.reload();
       })
       .catch(err => {
         console.log(err);

@@ -6,7 +6,7 @@ import Movie from "./Movies/Movie";
 import UpdateMovieForm from './Movies/UpdateMovieForm';
 import axios from 'axios';
 
-const App = (props) => {
+const App = () => {
   const [savedList, setSavedList] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [editMovie, setEditMovie] = useState({

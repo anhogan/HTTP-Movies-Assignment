@@ -8,6 +8,7 @@ const MovieCard = props => {
       .then(res => {
         console.log(res);
         props.history.push('/');
+        window.location.reload();
       })
       .catch(err => {
         console.log(err);
